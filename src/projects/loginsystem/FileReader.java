@@ -8,28 +8,28 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class FileReader {
-    private Map<String, String> userDB = new HashMap<>();
-    private final String FILE_PATH = "C:\\Users\\Levin\\OneDrive\\Desktop\\Levin\\Programmieren\\Privat\\src\\projects\\loginsystem\\Users.txt";
+    private Map<String, String> userDB = new HashMap<>(); // creates hashmap as "database"
+    private final String FILE_PATH = "C:\\Users\\Levin\\OneDrive\\Desktop\\Levin\\Programmieren\\Privat\\src\\projects\\loginsystem\\Users.txt"; // path textfile with usernames and passwords
 
     public FileReader() {
-        try (Stream<String> lines = Files.lines(Paths.get(FILE_PATH))) {
-            lines.filter(line -> line.contains(","))
+        try (Stream<String> lines = Files.lines(Paths.get(FILE_PATH))) { // reads textfile and writes into hashmap
+            lines.filter(line -> line.contains(",")) // comma separates username from password
                     .forEach(line -> {
-                        String[] keyValuePair = line.split(",", 2);
-                        String key = keyValuePair[0];
-                        String value = keyValuePair[1];
-                        userDB.put(key, value);
+                        String[] keyValuePair = line.split(",", 2); // separates with comma
+                        String key = keyValuePair[0]; // string1 -> key -> username
+                        String value = keyValuePair[1]; // string2 -> value -> password
+                        userDB.put(key, value); // -> puts both strings into hashmap
                     });
-        } catch (IOException e) {
+        } catch (IOException e) { // exeption 
             e.printStackTrace();
         }
     }
 
-    public boolean containsUser(String user) {
+    public boolean containsUser(String user) { // checks if the entered user is in the db
         return userDB.containsKey(user);
     }
 
-    public String getPasswordForUser(String user) {
+    public String getPasswordForUser(String user) { // checks if the entered password is correct
         if (containsUser(user)) {
             return userDB.get(user);
         } else {
