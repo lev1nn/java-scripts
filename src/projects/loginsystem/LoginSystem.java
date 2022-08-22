@@ -3,6 +3,9 @@ package projects.loginsystem;
 import java.util.*;
 
 public class LoginSystem {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -24,10 +27,10 @@ public class LoginSystem {
 
     private static void validUser(String user, FileReader db) {
         if (user == null || user.equals("") || user.matches("[ \t]+")) { // checks if user is empty
-            System.out.println("empty user, please try again"); // -> error message
+            System.out.println("error " + ANSI_RED + "[empty user]" + ANSI_RESET + " please try again"); // -> error message
             System.exit(0); // system exit
         } else if (!db.containsUser(user)) { // checks if user isn't in db
-            System.out.println("user does not exist, please try again "); // -> error message
+            System.out.println("error " + ANSI_RED + "[user doesn't exist]" + ANSI_RESET + " please try again"); // -> error message
             System.exit(0); // system exit
         }
     }
@@ -39,15 +42,15 @@ public class LoginSystem {
             System.out.println("failed to log in [problem in database] please try again ");
             return false;
         } else if (password == null || password.equals("") || password.matches("[ \t]+")) { // if pw is empty -> error message
-            System.out.println("failed to log in [empty password] please try again ");
+            System.out.println("failed to log in " + ANSI_RED + "[empty password]" + ANSI_RESET + " please try again ");
             return false;
         } else if (pwFromDB.equals(password)) { // if pw is correct -> error message
             return true;
         } else if (!pwFromDB.equals(password)) { // if pw is incorrect -> error message
-            System.out.println("failed to log in [invalid password] please try again ");
+            System.out.println("failed to log in " + ANSI_RED + "[invalid password]" + ANSI_RESET + " please try again ");
             return false;
         } else { // else unknown error message
-            System.out.println("failed to log in [unknown error] please try again ");
+            System.out.println("failed to log in " + ANSI_RED + "[unknown error]" + ANSI_RESET + " please try again ");
             return false;
         }
     }
