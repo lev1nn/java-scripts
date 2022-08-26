@@ -40,16 +40,18 @@ public class FileEditor {
     public static void cleanUpFiles(String completePath, String directory) {
         Scanner scanner = new Scanner(System.in); // create new input scanner
 
-        // TODO ask if user wants to delete file when it already exists or if user wants to name the file otherwise
-
-        // if (completePath.exists() && !completePath.isDirectory()) {
-            // System.out.println("Das File existiert bereits, wollen Sie es löschen? [y/n] ");
-            // String wantsToDelete = scanner.nextLine();
-            // if (wantsToDelete.equals("y") || wantsToDelete.equals("Y")) {
+        if (Files.exists(Path.of(completePath))) { // checks if file already exists
+            System.out.println("Das File existiert bereits, wollen Sie es löschen? [y/n] ");
+            String wantsToDelete = scanner.nextLine(); // user can say if he wants to delete or not
+            if (wantsToDelete.equals("y") || wantsToDelete.equals("Y")) {
                 File targetFile = new File(completePath);
-                targetFile.delete();
-            // }
-        // }
+                targetFile.delete(); // deletes target-file
+            } else {
+                System.out.println("");
+                System.out.println("Alles klar, das Programm wird beendet");
+                System.exit(0); // program ends
+            }
+        }
     }
 
     private static void createFile(String directory, String fileName, String completePath) throws IOException {
